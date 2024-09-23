@@ -1,0 +1,228 @@
+$(document).ready(function(){
+	
+	$('.triggerwait').on('click', function(){
+		$('#blanket').show();
+	});
+	$('.triggerwaitform').on('submit', function(){
+		$('#blanket').show();
+	});
+
+	$('#depto_selector').change(function(){
+		var depto = $(this).val()
+		console.log(depto);
+		var token = $('input[name=_token]' ).val();
+		console.log(token);	
+		$.ajax({
+			 type: "POST",		
+			 url: "getdeptos",
+			 data: {p:depto , _token:token },
+			 dataType: 'json',	
+			  success: function(z){
+			  	var options = "";					
+			  	$.each(z, function(i, e) {
+		  		  options += "<option value='"+e.ciudades+"'> "+e.ciudades+"</option>";
+				});
+		  		  $("#city-selector").html(options);
+			}
+		})	
+	});
+
+});
+
+function updateCartCount(n) {
+	$('#cart-counter').html(n); 
+}
+
+function numberformat(value){
+	value = parseFloat(value);
+	formatted = value.toFixed(0).replace(/./g, function(c, i, a) {
+        return i && c !== "." && ((a.length - i) % 3 === 0) ? ',' + c : c;
+    });
+    return formatted;
+}
+
+function isNumeric(n) {
+    return !isNaN(parseFloat(n)) && isFinite(n);
+}
+
+$('.addresslink').on('click', function(){
+	$('#myModalLabel').html($(this).data('name'));
+	$('#o_direccion').html($(this).data('direccion'));
+	$('#o_ciudad').html($(this).data('ciudad'));
+	$('#o_telefono').html($(this).data('telefono'));
+	$('#o_celular').html($(this).data('celular'));
+	$('#o_email').html($(this).data('email'));
+})
+	
+
+const toast = Swal.mixin({
+  toast: true,
+  position: 'center',
+  showConfirmButton: false,
+  timer: 3000,
+  background: '#2fb600',
+  // color: 'white'    
+});
+
+function toastSuccess(message){
+    toast({type: 'success', html: "<span style='color:white'>"+message+"</span>"})
+}
+function showB(){
+    $("#blanket").show()
+}
+function hideB(){
+    $("#blanket").hide()
+}
+function setRating(rating,element){
+
+	$("#"+element).starRating({
+	  initialRating: rating,
+	  strokeWidth: 0,
+	  starSize: 25,
+	  readOnly: true,
+	  useGradient: false,
+	  activeColor: 'orange'
+	});
+}
+
+function loadingAlert(message){
+  swal({title: message, allowOutsideClick: false, allowEscapeKey: false, onBeforeOpen: () => {Swal.showLoading()}})
+}
+
+function swalSuccess(message){
+	Swal({
+	  position: 'center',
+	  type: 'success',
+	  title: message,
+	  showConfirmButton: false,
+	  timer: 1500
+	})
+}
+
+function swalSuccessLong(message){
+	Swal({
+	  position: 'center',
+	  type: 'success',
+	  html: message,
+	  showConfirmButton: false,
+	  timer: 4500
+	})
+}
+
+function swalError(message){
+	Swal({
+	  position: 'center',
+	  type: 'error',
+	  title: message,
+	  showConfirmButton: true,
+	})
+}
+
+function swalAlert(message){
+  Swal({
+    position: 'center',
+    type: 'alert',
+    title: message,
+    showConfirmButton: true,
+  })
+}
+
+function snackWarning(message){
+    Snackbar.show({
+      text:message, 
+      pos: 'top-right', 
+      showAction: false, 
+      customClass: 'toast-warning'
+    })
+}
+function snackWarningA(message){
+    Snackbar.show({
+      text:message, 
+      pos: 'top-right', 
+      showAction: true, 
+      customClass: 'toast-warning',
+      actionText: 'CERRAR',
+      duration: 60000,
+      actionTextColor: '#00000082'
+    })
+}
+function snackWarningB(message){
+    Snackbar.show({
+      text:message, 
+      pos: 'bottom-right', 
+      showAction: false, 
+      customClass: 'toast-warning'
+    })
+}
+function snackSuccessB(message){
+    Snackbar.show({
+      text:message, 
+      pos: 'bottom-right', 
+      showAction: false, 
+      customClass: 'toast-success'
+    })
+}
+function snackSentence(message){
+    Snackbar.show({
+      text:message, 
+      pos: 'bottom-right', 
+      showAction: true, 
+      customClass: 'toast-sentence',
+      actionText: 'X',
+      duration: 20000,
+      actionTextColor: '#00000082'
+    })
+}
+function snackSuccessA(message){
+    Snackbar.show({
+      text:message, 
+      pos: 'top-right', 
+      showAction: true, 
+      customClass: 'toast-success',
+      actionText: 'CERRAR',
+      duration: 60000,
+      actionTextColor: '#00000082'
+    })
+}
+function snackSuccess(message){
+    Snackbar.show({
+      text:message, 
+      pos: 'top-right', 
+      showAction: false, 
+      customClass: 'toast-success'
+    })
+}
+
+function snackInfo(message){
+    Snackbar.show({
+      text:message, 
+      pos: 'top-right', 
+      showAction: true, 
+      customClass: 'toast-info',
+      actionText: 'CERRAR',
+      duration: 15000,
+      actionTextColor: '#00000082'
+    })
+}
+function snackInfoB(message){
+    Snackbar.show({
+      text:message, 
+      pos: 'bottom-right', 
+      showAction: true, 
+      customClass: 'toast-info',
+      actionText: 'CERRAR',
+      duration: 10000,
+      actionTextColor: '#00000082'
+    })
+}
+
+function closeSession(){
+  document.getElementById('logout-form').submit()
+}
+
+function activateSearch(){
+  document.getElementById('blanket_search').style.display = 'flex'  
+}
+function hideSearch(){
+  document.getElementById('blanket_search').style.display = 'none'  
+}

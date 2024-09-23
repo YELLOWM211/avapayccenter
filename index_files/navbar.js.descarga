@@ -1,0 +1,26 @@
+document.getElementById("nav_toggle").addEventListener('click',toggleNavBar)
+function toggleNavBar(){
+	if (navBarCollapsed == 'true') {
+		html.classList.remove(navBarCollapsedClass)
+		navBarCollapsed = 'false'
+	}else{
+		navBarCollapsed = 'true'
+		html.classList.add(navBarCollapsedClass)
+	}
+	localStorage.setItem('isNavbarVerticalCollapsed', navBarCollapsed)
+}
+
+const mouseTarget = document.getElementById('navbarVerticalCollapse');
+
+navBarCollapsedClassHover = 'navbar-vertical-collapsed-hover'
+mouseTarget.addEventListener('mouseenter', () => {
+  if (navBarCollapsed == 'true') {
+  	html.classList.add(navBarCollapsedClassHover)
+  }
+});
+
+mouseTarget.addEventListener('mouseleave', () => {
+  if (navBarCollapsed == 'true') {
+  	html.classList.remove(navBarCollapsedClassHover)
+  }
+});

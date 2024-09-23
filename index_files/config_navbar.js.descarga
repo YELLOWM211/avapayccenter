@@ -1,0 +1,6 @@
+navBarCollapsedClass = 'navbar-vertical-collapsed'
+navBarCollapsed = localStorage.getItem('isNavbarVerticalCollapsed');
+html = document.getElementsByTagName('html')[0]
+if(navBarCollapsed != undefined && navBarCollapsed == "true"){
+	html.classList.add(navBarCollapsedClass)
+}
